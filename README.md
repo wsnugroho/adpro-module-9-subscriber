@@ -10,3 +10,10 @@
 the second **_guest_**, and what is **_localhost:5672_** is for?
 
 String `guest:guest@localhost:5672` adalah format URL koneksi untuk RabbitMQ. Format ini terdiri dari beberapa bagian: bagian pertama **_guest_** adalah username untuk autentikasi ke server RabbitMQ, bagian kedua **_guest_** adalah password untuk autentikasi, dan **_localhost:5672_** menunjukkan alamat server (localhost, yaitu komputer lokal) dan port (5672) dimana server RabbitMQ berjalan. Port 5672 adalah port default yang digunakan oleh protokol AMQP.
+
+> In your subscriber directory, edit your Readme.md, add the screen capture of your RabbitMQ UI, and answer why the total number of queue is as such
+
+![Slow Subscriber](assets/rabbitmq-slow.png)
+
+Pada gambar di atas dapat diamati fenomena "slow subscriber" yang terlihat dari grafik RabbitMQ. Grafik "Queued messages" menunjukkan penumpukan pesan hingga sekitar 10 pesan pada puncaknya, sementara grafik "Message rates" memperlihatkan dua garis berbeda - garis merah yang lebih tinggi menunjukkan rate publisher yang mengirim pesan, dan garis ungu yang lebih rendah menunjukkan rate subscriber yang memproses pesan. Fenomena ini terjadi karena subscriber tidak dapat memproses pesan secepat publisher mengirimkannya, sehingga pesan menumpuk dalam queue sebelum diproses.
+
