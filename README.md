@@ -17,3 +17,14 @@ String `guest:guest@localhost:5672` adalah format URL koneksi untuk RabbitMQ. Fo
 
 Pada gambar di atas dapat diamati fenomena "slow subscriber" yang terlihat dari grafik RabbitMQ. Grafik "Queued messages" menunjukkan penumpukan pesan hingga sekitar 10 pesan pada puncaknya, sementara grafik "Message rates" memperlihatkan dua garis berbeda - garis merah yang lebih tinggi menunjukkan rate publisher yang mengirim pesan, dan garis ungu yang lebih rendah menunjukkan rate subscriber yang memproses pesan. Fenomena ini terjadi karena subscriber tidak dapat memproses pesan secepat publisher mengirimkannya, sehingga pesan menumpuk dalam queue sebelum diproses.
 
+> Edit your subscriber README.md, put your capture about running three subscriber in the readme.md, and also add some
+explanation/reflection of why it is like that. Take a look at the code of publisher and subscriber, do
+you see something to improve?
+
+![Console Three Subscriber](assets/console-threesubs.png)
+
+Pada gambar di atas, terdapat 3 subscriber yang menerima pesan dari publisher. Ketiga subscriber ini berjalan secara paralel dan masing-masing mengambil pesan dari queue yang sama, yang memungkinkan distribusi beban kerja sehingga pesan dapat diproses lebih cepat dibandingkan dengan menggunakan satu subscriber saja.
+
+![RabbitMQ Three Subscriber](assets/rabbitmq-threesubs.png)
+
+Pada gambar di atas, dapat dilihat pada dashboard RabbitMQ bahwa terdapat 3 subscriber yang aktif (ditunjukkan dengan "Consumers: 3"). Grafik "Queued messages" menunjukkan puncak hanya sekitar 4-5 pesan, jauh lebih sedikit dibanding kasus single subscriber. Pada grafik "Message rates", garis merah (publisher) dan ungu (subscriber) terlihat lebih seimbang, menandakan dengan 3 subscriber sistem dapat memproses pesan hampir secepat pengirimannya. Hal ini membuktikan bahwa multiple subscriber meningkatkan throughput sistem secara signifikan.
